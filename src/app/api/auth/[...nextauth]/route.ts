@@ -3,7 +3,6 @@ import FacebookProvider from "next-auth/providers/facebook"
 import GoogleProvider from "next-auth/providers/google"
 import { SupabaseAdapter } from "@auth/supabase-adapter"
 
-// Extend the Session type to include user.id
 declare module "next-auth" {
   interface Session {
     user: {
@@ -14,10 +13,6 @@ declare module "next-auth" {
     }
   }
 }
-
-// Log the environment variables to ensure they are loaded
-console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
-console.log("Supabase Service Role Key Loaded:", !!process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 export const authOptions = {
   providers: [
