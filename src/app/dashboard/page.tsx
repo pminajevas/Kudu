@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import AuthContainer from "../../components/auth/AuthContainer";
 import UserStatus from "../../components/auth/UserStatus";
-import UsersList from "../../components/users/UsersList";
-import Alert from "../../components/ui/Alert";
+import GroupDashboard from "../../components/groups/GroupDashboard";
 
 interface User {
   id: string;
@@ -27,7 +26,6 @@ interface RegisterData {
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
-  const [users, setUsers] = useState<User[]>([]);
   const [message, setMessage] = useState("");
   const [authToken, setAuthToken] = useState("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -74,33 +72,6 @@ export default function Dashboard() {
 
     syncAuth();
   }, [session]);
-
-  const fetchUsers = async () => {
-    try {
-      const token = localStorage.getItem("auth_token");
-      if (!token) {
-        setMessage("Please log in first to view users");
-        return;
-      }
-
-      const response = await fetch("/api/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUsers(data);
-        setMessage("Users fetched successfully");
-      } else {
-        const error = await response.json();
-        setMessage(`Error fetching users: ${error.error}`);
-      }
-    } catch (error) {
-      setMessage("Error fetching users");
-    }
-  };
 
   const handleRegister = async (data: RegisterData) => {
     try {
@@ -157,7 +128,6 @@ export default function Dashboard() {
     // Clear local state and storage
     setCurrentUser(null);
     setAuthToken("");
-    setUsers([]);
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_user");
     setMessage("Logged out successfully");
@@ -170,27 +140,10 @@ export default function Dashboard() {
         <div className="container mx-auto max-w-4xl">
           <UserStatus user={currentUser} onLogout={handleLogout} />
 
-          {message && (
-            <Alert variant="info" className="mb-6">
-              {message}
-            </Alert>
-          )}
-
-          <UsersList users={users} onRefresh={fetchUsers} isLoggedIn={!!currentUser} />
+          <GroupDashboard user={currentUser} />
         </div>
       ) : (
-        // Login/Register view
-        <>
-          {message && (
-            <div className="w-full max-w-md mb-6">
-              <Alert variant="info" className="text-sm">
-                {message}
-              </Alert>
-            </div>
-          )}
-
-          <AuthContainer onLogin={handleLogin} onRegister={handleRegister} />
-        </>
+        <AuthContainer onLogin={handleLogin} onRegister={handleRegister} />
       )}
     </div>
   );
