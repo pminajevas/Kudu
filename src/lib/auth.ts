@@ -56,3 +56,61 @@ export async function updateUserProfile(userId: string, updates: { name?: string
   if (error) throw error;
   return data;
 }
+
+export async function createUserProfile(userId: string, name: string, avatarUrl?: string) {
+  const { data, error } = await supabaseAdmin
+    .from('profiles')
+    .insert([
+      {
+        user_id: userId,
+        name,
+        avatar_url: avatarUrl || null,
+      }
+    ])
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function getOrCreateUserProfile(userId: string, name: string, avatarUrl?: string) {
+  try {
+    // First try to get existing profile
+    const { data: existingProfile, error: getError } = await supabaseAdmin
+      .from('profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+
+    if (!getError && existingProfile) {
+      // Profile exists, return it
+      return existingProfile;
+    }
+
+    // Profile doesn't exist, create it
+    console.log(`Creating profile for user ${userId} with name: ${name}`);
+    const { data: newProfile, error: createError } = await supabaseAdmin
+      .from('profiles')
+      .insert([
+        {
+          user_id: userId,
+          name,
+          avatar_url: avatarUrl || null,
+        }
+      ])
+      .select()
+      .single();
+
+    if (createError) {
+      console.error('Error creating profile:', createError);
+      throw createError;
+    }
+
+    console.log(`Successfully created profile for user ${userId}`);
+    return newProfile;
+  } catch (error) {
+    console.error('Error in getOrCreateUserProfile:', error);
+    throw error;
+  }
+}
