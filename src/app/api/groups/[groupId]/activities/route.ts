@@ -196,6 +196,27 @@ export async function POST(
       return NextResponse.json({ error: "Access denied. You are not a member of this group." }, { status: 403 });
     }
 
+    // Check if user is the current president (only presidents can create activities)
+    const { data: presidentData, error: presidentError } = await supabaseAdmin
+      .rpc('get_current_president', { target_group_id: groupId });
+
+    if (presidentError) {
+      console.error("Error checking president status:", presidentError);
+      return NextResponse.json({ error: "Failed to verify president status" }, { status: 500 });
+    }
+
+    if (!presidentData || presidentData.length === 0) {
+      return NextResponse.json({ error: "No president assigned for this week. Please contact an administrator." }, { status: 403 });
+    }
+
+    const currentPresident = presidentData[0];
+    if (currentPresident.user_id !== userId) {
+      return NextResponse.json({ 
+        error: `Only the current week's president (${currentPresident.name}) can create activities.`,
+        currentPresident: currentPresident.name
+      }, { status: 403 });
+    }
+
     // Parse request body
     const { title, description, eventDate } = await request.json();
 

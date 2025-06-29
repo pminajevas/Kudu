@@ -43,6 +43,14 @@ interface Activity {
   userRsvp?: "yes" | "no" | null;
 }
 
+interface President {
+  userId: string;
+  name: string;
+  email: string;
+  weekStartDate: string;
+  weekEndDate: string;
+}
+
 export default function GroupDashboardPage() {
   const params = useParams();
   const router = useRouter();
@@ -50,8 +58,11 @@ export default function GroupDashboardPage() {
 
   const [groupDetails, setGroupDetails] = useState<GroupDetails | null>(null);
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [president, setPresident] = useState<President | null>(null);
+  const [isCurrentUserPresident, setIsCurrentUserPresident] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingActivities, setLoadingActivities] = useState(true);
+  const [loadingPresident, setLoadingPresident] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [showCreateActivity, setShowCreateActivity] = useState(false);
@@ -117,9 +128,42 @@ export default function GroupDashboardPage() {
       }
     };
 
+    const fetchPresident = async () => {
+      try {
+        console.log("Frontend - Fetching president for group:", groupId);
+        const token = localStorage.getItem("auth_token");
+        if (!token) return;
+
+        const response = await fetch(`/api/groups/${groupId}/president`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log("Frontend - President API response status:", response.status);
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Frontend - President data received:", data);
+          setPresident(data.president);
+          setIsCurrentUserPresident(data.isCurrentUserPresident);
+          console.log("Frontend - President state updated:", data.president);
+          console.log("Frontend - Is current user president:", data.isCurrentUserPresident);
+        } else {
+          const errorData = await response.json();
+          console.error("Failed to fetch president information:", errorData);
+        }
+      } catch (error) {
+        console.error("Error fetching president:", error);
+      } finally {
+        setLoadingPresident(false);
+      }
+    };
+
     if (groupId) {
       fetchGroupDetails();
       fetchActivities();
+      fetchPresident();
     }
   }, [groupId, router]);
 
@@ -237,6 +281,14 @@ export default function GroupDashboardPage() {
     return date.toLocaleDateString();
   };
 
+  // Debug logging
+  console.log("Debug - Component render:", {
+    loadingPresident,
+    president,
+    isCurrentUserPresident,
+    groupId,
+  });
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 p-4">
@@ -294,7 +346,43 @@ export default function GroupDashboardPage() {
       <div className="max-w-6xl mx-auto p-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Members Section */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
+            {/* President Section */}
+            <Card>
+              <div className="p-6">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">👑 Weekly President</h2>
+                {loadingPresident ? (
+                  <div className="text-center py-4 text-gray-500">
+                    <p>Loading president info...</p>
+                  </div>
+                ) : president ? (
+                  <div className="space-y-3">
+                    <div className={`p-4 rounded-lg border-2 ${isCurrentUserPresident ? "bg-amber-50 border-amber-200" : "bg-blue-50 border-blue-200"}`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xl">👑</span>
+                        <span className={`font-semibold ${isCurrentUserPresident ? "text-amber-800" : "text-blue-800"}`}>{president.name}</span>
+                        {isCurrentUserPresident && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">You</span>}
+                      </div>
+                      <p className="text-sm text-gray-600 mb-1">{president.email}</p>
+                      <p className="text-xs text-gray-500">
+                        Term: {new Date(president.weekStartDate).toLocaleDateString()} - {new Date(president.weekEndDate).toLocaleDateString()}
+                      </p>
+                      {isCurrentUserPresident && <p className="text-xs text-amber-600 mt-2 font-medium">✨ You can create activities this week!</p>}
+                    </div>
+                    <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-lg">
+                      <p className="font-medium mb-1">About the President System:</p>
+                      <p>Each week, a new president is randomly selected from group members. Only the current president can create new activities.</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-4 text-gray-500">
+                    <p>No president assigned for this week</p>
+                  </div>
+                )}
+              </div>
+            </Card>
+
+            {/* Members Section */}
             <Card>
               <div className="p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Members ({groupDetails.members.length})</h2>
@@ -302,7 +390,14 @@ export default function GroupDashboardPage() {
                   {groupDetails.members.map((member) => (
                     <div key={member.userId} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                       <div>
-                        <p className="font-medium text-gray-900">{member.fullName}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-gray-900">{member.fullName}</p>
+                          {president?.userId === member.userId && (
+                            <span className="text-lg" title="Current President">
+                              👑
+                            </span>
+                          )}
+                        </div>
                         <p className="text-sm text-gray-500">{member.email}</p>
                         <p className="text-xs text-gray-400">Joined {new Date(member.joinedAt).toLocaleDateString()}</p>
                       </div>
@@ -320,9 +415,20 @@ export default function GroupDashboardPage() {
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-gray-900">Recent Activities</h2>
-                  <Button size="sm" onClick={() => setShowCreateActivity(true)}>
-                    New Activity
-                  </Button>
+                  {isCurrentUserPresident ? (
+                    <Button size="sm" onClick={() => setShowCreateActivity(true)}>
+                      New Activity
+                    </Button>
+                  ) : (
+                    <div className="text-right">
+                      <div title="Only the current president can create activities">
+                        <Button size="sm" disabled>
+                          New Activity
+                        </Button>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">Only {president?.name || "the president"} can create activities</p>
+                    </div>
+                  )}
                 </div>
 
                 {loadingActivities ? (
