@@ -24,15 +24,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <NavBar />
       <body className={`${poppins.variable} scroll-smooth antialiased`}>
+        <NavBar />
         <Providers>
           {children}
           <ScrollToTop />
           <SocialSidebar />
         </Providers>
+        <Footer />
       </body>
-      <Footer />
     </html>
   );
 }
