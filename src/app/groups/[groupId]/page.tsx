@@ -318,24 +318,24 @@ export default function GroupDashboardPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <div className="bg-[var(--background-secondary)] shadow-sm border-b border-[var(--primary)]/10">
+      <div className="bg-gradient-to-r from-purple-50 to-indigo-50 shadow-sm border-b border-purple-200">
         <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-bold text-[var(--primary)]">{groupDetails.name}</h1>
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getRoleColor(groupDetails.userRole)}`}>{groupDetails.userRole}</span>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+                <h1 className="text-xl sm:text-2xl font-bold text-purple-700 truncate">{groupDetails.name}</h1>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getRoleColor(groupDetails.userRole)} self-start`}>{groupDetails.userRole}</span>
               </div>
-              {groupDetails.description && <p className="text-[var(--secondary)]">{groupDetails.description}</p>}
-              <p className="text-sm text-[var(--secondary)]/70 mt-1">
+              {groupDetails.description && <p className="text-purple-600 text-sm sm:text-base break-words">{groupDetails.description}</p>}
+              <p className="text-sm text-purple-500 mt-1">
                 Created {new Date(groupDetails.created_at).toLocaleDateString()} • {groupDetails.members.length} members
               </p>
             </div>
-            <div className="flex gap-3">
-              <Button onClick={handleCopyInviteLink} variant="secondary">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 shrink-0">
+              <Button onClick={handleCopyInviteLink} variant="secondary" size="sm">
                 {copied ? "Copied!" : "Share Invite"}
               </Button>
-              <Button onClick={() => router.push("/dashboard")} variant="secondary">
+              <Button onClick={() => router.push("/dashboard")} variant="secondary" size="sm">
                 Back to Dashboard
               </Button>
             </div>
@@ -349,37 +349,43 @@ export default function GroupDashboardPage() {
           <div className="lg:col-span-1 space-y-6">
             {/* President Section */}
             <Card>
-              <div className="p-6">
-                <h2 className="text-lg font-semibold text-[var(--primary)] mb-4">👑 Weekly President</h2>
+              <div className="p-6 bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200">
+                <h2 className="text-lg font-semibold text-purple-800 mb-4 flex items-center gap-2">
+                  <span className="text-xl">👑</span>
+                  Weekly President
+                </h2>
                 {loadingPresident ? (
-                  <div className="text-center py-4 text-[var(--secondary)]">
+                  <div className="text-center py-4 text-purple-600">
                     <p>Loading president info...</p>
                   </div>
                 ) : president ? (
                   <div className="space-y-3">
-                    <div className={`p-4 rounded-lg border-2 ${isCurrentUserPresident ? "bg-[var(--background)] border-[var(--primary)]/30" : "bg-[var(--secondary)]/5 border-[var(--secondary)]/20"}`}>
+                    <div
+                      className={`p-4 rounded-lg border-2 ${
+                        isCurrentUserPresident ? "bg-gradient-to-r from-purple-100 to-indigo-100 border-purple-300 shadow-lg" : "bg-gradient-to-r from-gray-50 to-slate-50 border-gray-300"
+                      }`}
+                    >
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xl">👑</span>
-                        <span className={`font-semibold ${isCurrentUserPresident ? "text-[var(--primary)]" : "text-[var(--secondary)]"}`}>{president.name}</span>
-                        {isCurrentUserPresident && (
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[var(--background)] text-[var(--primary)] border border-[var(--primary)]/20">
-                            You
-                          </span>
-                        )}
+                        <span className="text-2xl">👑</span>
+                        <span className={`font-bold text-lg ${isCurrentUserPresident ? "text-purple-800" : "text-gray-700"}`}>{president.name}</span>
+                        {isCurrentUserPresident && <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-purple-600 text-white shadow-md">YOU</span>}
                       </div>
-                      <p className="text-sm text-[var(--secondary)] mb-1">{president.email}</p>
-                      <p className="text-xs text-[var(--secondary)]/70">
+                      <p className={`text-sm ${isCurrentUserPresident ? "text-purple-600" : "text-gray-600"} mb-1`}>{president.email}</p>
+                      <p className={`text-xs ${isCurrentUserPresident ? "text-purple-500" : "text-gray-500"}`}>
                         Term: {new Date(president.weekStartDate).toLocaleDateString()} - {new Date(president.weekEndDate).toLocaleDateString()}
                       </p>
-                      {isCurrentUserPresident && <p className="text-xs text-[var(--primary)] mt-2 font-medium">✨ You can create activities this week!</p>}
+                      {isCurrentUserPresident && <p className="text-sm text-purple-700 mt-3 font-semibold bg-purple-50 px-3 py-1 rounded-md">✨ You can create activities this week!</p>}
                     </div>
-                    <div className="text-xs text-[var(--secondary)] bg-[var(--background)] p-3 rounded-lg border border-[var(--primary)]/10">
-                      <p className="font-medium mb-1 text-[var(--primary)]">About the President System:</p>
-                      <p>Each week, a new president is randomly selected from group members. Only the current president can create new activities.</p>
+                    <div className="text-xs text-indigo-700 bg-indigo-50 p-4 rounded-lg border border-indigo-200">
+                      <p className="font-semibold mb-2 text-indigo-800 flex items-center gap-1">
+                        <span>ℹ️</span>
+                        About the President System:
+                      </p>
+                      <p className="leading-relaxed">Each week, a new president is randomly selected from group members. Only the current president can create new activities.</p>
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center py-4 text-[var(--secondary)]">
+                  <div className="text-center py-4 text-purple-600">
                     <p>No president assigned for this week</p>
                   </div>
                 )}
