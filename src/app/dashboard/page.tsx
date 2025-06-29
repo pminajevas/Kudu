@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import AuthContainer from "../../components/auth/AuthContainer";
-import UserStatus from "../../components/auth/UserStatus";
 import GroupDashboard from "../../components/groups/GroupDashboard";
 
 interface User {
@@ -134,16 +133,54 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-yellow-100 flex items-center justify-center p-8">
+    <div className="min-h-screen bg-gray-50 relative">
+      {/* Background Image */}
+      <div
+        className="fixed bottom-0 right-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] bg-no-repeat bg-contain bg-bottom-right opacity-40 pointer-events-none z-0"
+        style={{
+          backgroundImage: "url('/images/grpupsimagewithremovedbg.png')",
+          backgroundPosition: "bottom right",
+        }}
+      />
       {currentUser ? (
-        // Logged in view - show dashboard
-        <div className="container mx-auto max-w-4xl">
-          <UserStatus user={currentUser} onLogout={handleLogout} />
+        // Logged in view - show dashboard with top nav
+        <div className="relative z-10">
+          {/* Top Navigation Bar */}
+          <nav className="bg-white shadow-sm border-b border-gray-200">
+            <div className="container mx-auto max-w-6xl px-6 py-4">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <h1 className="text-2xl font-bold text-gray-800">Kudu</h1>
+                </div>
+                <div className="flex items-center">
+                  <button
+                    onClick={handleLogout}
+                    className="px-3 py-1.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-1 rounded-md transition-colors duration-200"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>
 
-          <GroupDashboard user={currentUser} />
+          {/* Main Content */}
+          <div className="flex items-center justify-center p-8">
+            <div className="container mx-auto max-w-4xl">
+              {/* Welcome Message */}
+              <div className="text-center mb-8">
+                <h1 className="text-4xl font-bold text-gray-900 mb-2">Welcome, {currentUser.name}!</h1>
+                <p className="text-lg text-gray-600">Ready to manage your groups and activities</p>
+              </div>
+
+              <GroupDashboard user={currentUser} />
+            </div>
+          </div>
         </div>
       ) : (
-        <AuthContainer onLogin={handleLogin} onRegister={handleRegister} />
+        <div className="flex items-center justify-center p-8 min-h-screen">
+          <AuthContainer onLogin={handleLogin} onRegister={handleRegister} />
+        </div>
       )}
     </div>
   );

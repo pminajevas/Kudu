@@ -16,7 +16,7 @@ export default function Input({ label, type, value, onChange, placeholder, requi
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 p-3 border"
+        className="w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 p-3 border text-gray-900 placeholder-gray-500 bg-white"
         placeholder={placeholder}
         required={required}
         minLength={minLength}
