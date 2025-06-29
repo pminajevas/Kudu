@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Group {
   id: string;
@@ -17,9 +18,14 @@ interface GroupCardProps {
 }
 
 export default function GroupCard({ group, userRole, onLeaveGroup }: GroupCardProps) {
+  const router = useRouter();
   const isOwner = userRole === "owner";
   const [copied, setCopied] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
+
+  const handleViewGroup = () => {
+    router.push(`/groups/${group.id}`);
+  };
 
   const handleCopyInviteLink = async () => {
     try {
@@ -103,7 +109,7 @@ export default function GroupCard({ group, userRole, onLeaveGroup }: GroupCardPr
       </div>
 
       <div className="mt-4 flex gap-2">
-        <button className="flex-1 bg-amber-600 text-white text-sm py-2 px-3 rounded-md hover:bg-amber-700 transition-colors">View Group</button>
+        <button onClick={handleViewGroup} className="flex-1 bg-amber-600 text-white text-sm py-2 px-3 rounded-md hover:bg-amber-700 transition-colors">View Group</button>
 
         <button onClick={handleCopyInviteLink} className="bg-blue-600 text-white text-sm py-2 px-3 rounded-md hover:bg-blue-700 transition-colors flex items-center gap-1" title="Copy invite link">
           {copied ? (
