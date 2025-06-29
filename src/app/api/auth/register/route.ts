@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
-import { generateToken } from '@/lib/auth';
+import { generateToken, createUserProfile } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('Registration request received');
     const { email, password, name } = await request.json();
-    console.log('Request data:', { email, name, passwordLength: password?.length });
 
     if (!email || !password || !name) {
-      console.log('Validation failed: missing fields');
       return NextResponse.json(
         { error: 'Email, password, and name are required' },
         { status: 400 }
@@ -24,7 +21,6 @@ export async function POST(request: NextRequest) {
     });
 
     if (authError) {
-      console.error('Supabase auth error:', authError);
       if (authError.message.includes('already registered') || authError.message.includes('already exists')) {
         return NextResponse.json(
           { error: 'User with this email already exists' },
@@ -45,16 +41,7 @@ export async function POST(request: NextRequest) {
       );
     }
 ;
-    const { data: profile, error: profileError } = await supabaseAdmin
-      .from('profiles')
-      .insert([
-        {
-          user_id: authData.user.id,
-          name,
-        }
-      ])
-      .select()
-      .single();
+    const profile = await createUserProfile(authData.user.id, name);
 
     const userPayload = {
       id: authData.user.id,

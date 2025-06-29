@@ -2,6 +2,8 @@ import NextAuth, { Session } from "next-auth"
 import FacebookProvider from "next-auth/providers/facebook"
 import GoogleProvider from "next-auth/providers/google"
 import { SupabaseAdapter } from "@auth/supabase-adapter"
+import { supabaseAdmin } from "@/lib/supabase"
+import { getOrCreateUserProfile } from "@/lib/auth"
 
 declare module "next-auth" {
   interface Session {
@@ -34,6 +36,20 @@ export const authOptions = {
       // Send properties to the client
       if (session.user) {
         session.user.id = user.id
+        
+        // Ensure OAuth users have profiles
+        if (user && user.id) {
+          try {
+            await getOrCreateUserProfile(
+              user.id,
+              user.name || user.email?.split('@')[0] || 'User',
+              user.image || undefined
+            );
+          } catch (error) {
+            console.error('Error ensuring OAuth user profile exists:', error);
+            // Don't block session, just log the error
+          }
+        }
       }
       return session
     },
