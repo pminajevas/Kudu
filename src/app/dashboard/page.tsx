@@ -136,7 +136,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-[var(--background)] relative">
       {/* Background Image */}
       <div
-        className="fixed bottom-0 right-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] bg-no-repeat bg-contain bg-bottom-right opacity-40 pointer-events-none z-0"
+        className="hidden sm:block fixed bottom-0 right-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] bg-no-repeat bg-contain bg-bottom-right opacity-40 pointer-events-none z-0"
         style={{
           backgroundImage: "url('/images/grpupsimagewithremovedbg.png')",
           backgroundPosition: "bottom right",
