@@ -143,7 +143,7 @@ export default function EditActivityDialog({ isOpen, onClose, groupId, activity,
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="description" className="block text-sm font-medium text-[var(--primary)] mb-2">
             Description
           </label>
           <textarea
@@ -153,12 +153,12 @@ export default function EditActivityDialog({ isOpen, onClose, groupId, activity,
             placeholder="Enter activity description (optional)"
             disabled={isLoading || isDeleting}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 text-gray-900 placeholder-gray-500"
+            className="w-full px-3 py-2 border border-[var(--primary)]/20 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary)] focus:border-[var(--primary)] text-[var(--foreground)] placeholder-[var(--secondary)] bg-[var(--background-secondary)]"
           />
         </div>
 
         <div>
-          <label htmlFor="eventDate" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="eventDate" className="block text-sm font-medium text-[var(--primary)] mb-2">
             Event Date
           </label>
           <input
@@ -167,7 +167,7 @@ export default function EditActivityDialog({ isOpen, onClose, groupId, activity,
             value={eventDate}
             onChange={(e) => setEventDate(e.target.value)}
             disabled={isLoading || isDeleting}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+            className="w-full px-3 py-2 border border-[var(--primary)]/20 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary)] focus:border-[var(--primary)] text-[var(--foreground)] bg-[var(--background-secondary)]"
           />
         </div>
 

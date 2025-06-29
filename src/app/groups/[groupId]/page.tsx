@@ -271,7 +271,7 @@ export default function GroupDashboardPage() {
   };
 
   const getRoleColor = (role: string) => {
-    return role === "owner" ? "bg-amber-100 text-amber-800" : "bg-blue-100 text-blue-800";
+    return role === "owner" ? "bg-[var(--background)] text-[var(--primary)] border border-[var(--primary)]/20" : "bg-[var(--secondary)]/10 text-[var(--secondary)]";
   };
 
   const formatEventDateTime = (activity: Activity) => {
@@ -291,9 +291,9 @@ export default function GroupDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4">
+      <div className="min-h-screen bg-[var(--background)] p-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center py-8">Loading group details...</div>
+          <div className="text-center py-8 text-[var(--secondary)]">Loading group details...</div>
         </div>
       </div>
     );
@@ -301,7 +301,7 @@ export default function GroupDashboardPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4">
+      <div className="min-h-screen bg-[var(--background)] p-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center py-8">
             <p className="text-red-600 mb-4">{error}</p>
@@ -317,17 +317,17 @@ export default function GroupDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-sm border-b">
+    <div className="min-h-screen bg-[var(--background)]">
+      <div className="bg-[var(--background-secondary)] shadow-sm border-b border-[var(--primary)]/10">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-bold text-gray-900">{groupDetails.name}</h1>
+                <h1 className="text-2xl font-bold text-[var(--primary)]">{groupDetails.name}</h1>
                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getRoleColor(groupDetails.userRole)}`}>{groupDetails.userRole}</span>
               </div>
-              {groupDetails.description && <p className="text-gray-600">{groupDetails.description}</p>}
-              <p className="text-sm text-gray-500 mt-1">
+              {groupDetails.description && <p className="text-[var(--secondary)]">{groupDetails.description}</p>}
+              <p className="text-sm text-[var(--secondary)]/70 mt-1">
                 Created {new Date(groupDetails.created_at).toLocaleDateString()} • {groupDetails.members.length} members
               </p>
             </div>
@@ -350,32 +350,36 @@ export default function GroupDashboardPage() {
             {/* President Section */}
             <Card>
               <div className="p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">👑 Weekly President</h2>
+                <h2 className="text-lg font-semibold text-[var(--primary)] mb-4">👑 Weekly President</h2>
                 {loadingPresident ? (
-                  <div className="text-center py-4 text-gray-500">
+                  <div className="text-center py-4 text-[var(--secondary)]">
                     <p>Loading president info...</p>
                   </div>
                 ) : president ? (
                   <div className="space-y-3">
-                    <div className={`p-4 rounded-lg border-2 ${isCurrentUserPresident ? "bg-amber-50 border-amber-200" : "bg-blue-50 border-blue-200"}`}>
+                    <div className={`p-4 rounded-lg border-2 ${isCurrentUserPresident ? "bg-[var(--background)] border-[var(--primary)]/30" : "bg-[var(--secondary)]/5 border-[var(--secondary)]/20"}`}>
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-xl">👑</span>
-                        <span className={`font-semibold ${isCurrentUserPresident ? "text-amber-800" : "text-blue-800"}`}>{president.name}</span>
-                        {isCurrentUserPresident && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">You</span>}
+                        <span className={`font-semibold ${isCurrentUserPresident ? "text-[var(--primary)]" : "text-[var(--secondary)]"}`}>{president.name}</span>
+                        {isCurrentUserPresident && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[var(--background)] text-[var(--primary)] border border-[var(--primary)]/20">
+                            You
+                          </span>
+                        )}
                       </div>
-                      <p className="text-sm text-gray-600 mb-1">{president.email}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-sm text-[var(--secondary)] mb-1">{president.email}</p>
+                      <p className="text-xs text-[var(--secondary)]/70">
                         Term: {new Date(president.weekStartDate).toLocaleDateString()} - {new Date(president.weekEndDate).toLocaleDateString()}
                       </p>
-                      {isCurrentUserPresident && <p className="text-xs text-amber-600 mt-2 font-medium">✨ You can create activities this week!</p>}
+                      {isCurrentUserPresident && <p className="text-xs text-[var(--primary)] mt-2 font-medium">✨ You can create activities this week!</p>}
                     </div>
-                    <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-lg">
-                      <p className="font-medium mb-1">About the President System:</p>
+                    <div className="text-xs text-[var(--secondary)] bg-[var(--background)] p-3 rounded-lg border border-[var(--primary)]/10">
+                      <p className="font-medium mb-1 text-[var(--primary)]">About the President System:</p>
                       <p>Each week, a new president is randomly selected from group members. Only the current president can create new activities.</p>
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center py-4 text-gray-500">
+                  <div className="text-center py-4 text-[var(--secondary)]">
                     <p>No president assigned for this week</p>
                   </div>
                 )}
@@ -385,21 +389,21 @@ export default function GroupDashboardPage() {
             {/* Members Section */}
             <Card>
               <div className="p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Members ({groupDetails.members.length})</h2>
+                <h2 className="text-lg font-semibold text-[var(--primary)] mb-4">Members ({groupDetails.members.length})</h2>
                 <div className="space-y-3">
                   {groupDetails.members.map((member) => (
-                    <div key={member.userId} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div key={member.userId} className="flex items-center justify-between p-3 bg-[var(--background)] rounded-lg border border-[var(--primary)]/10">
                       <div>
                         <div className="flex items-center gap-2">
-                          <p className="font-medium text-gray-900">{member.fullName}</p>
+                          <p className="font-medium text-[var(--primary)]">{member.fullName}</p>
                           {president?.userId === member.userId && (
                             <span className="text-lg" title="Current President">
                               👑
                             </span>
                           )}
                         </div>
-                        <p className="text-sm text-gray-500">{member.email}</p>
-                        <p className="text-xs text-gray-400">Joined {new Date(member.joinedAt).toLocaleDateString()}</p>
+                        <p className="text-sm text-[var(--secondary)]">{member.email}</p>
+                        <p className="text-xs text-[var(--secondary)]/70">Joined {new Date(member.joinedAt).toLocaleDateString()}</p>
                       </div>
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(member.role)}`}>{member.role}</span>
                     </div>
@@ -414,7 +418,7 @@ export default function GroupDashboardPage() {
             <Card>
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900">Recent Activities</h2>
+                  <h2 className="text-lg font-semibold text-[var(--primary)]">Recent Activities</h2>
                   {isCurrentUserPresident ? (
                     <Button size="sm" onClick={() => setShowCreateActivity(true)}>
                       New Activity
@@ -426,13 +430,13 @@ export default function GroupDashboardPage() {
                           New Activity
                         </Button>
                       </div>
-                      <p className="text-xs text-gray-500 mt-1">Only {president?.name || "the president"} can create activities</p>
+                      <p className="text-xs text-[var(--secondary)] mt-1">Only {president?.name || "the president"} can create activities</p>
                     </div>
                   )}
                 </div>
 
                 {loadingActivities ? (
-                  <div className="text-center py-8 text-gray-500">
+                  <div className="text-center py-8 text-[var(--secondary)]">
                     <p>Loading activities...</p>
                   </div>
                 ) : (
@@ -440,27 +444,35 @@ export default function GroupDashboardPage() {
                     {activities.map((activity: Activity) => (
                       <div
                         key={activity.id}
-                        className={`border border-gray-200 rounded-lg p-4 transition-shadow ${activity.isOwner ? "hover:shadow-md cursor-pointer bg-amber-50 border-amber-200" : "hover:shadow-sm"}`}
+                        className={`border border-[var(--primary)]/20 rounded-lg p-4 transition-shadow ${
+                          activity.isOwner ? "hover:shadow-md cursor-pointer bg-[var(--background)] border-[var(--primary)]/30" : "hover:shadow-sm bg-[var(--background-secondary)]"
+                        }`}
                         onClick={activity.isOwner ? () => handleActivityClick(activity) : undefined}
                       >
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex items-center gap-2">
-                            <h3 className="font-medium text-gray-900">{activity.title}</h3>
-                            {activity.isOwner && <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">Owner</span>}
+                            <h3 className="font-medium text-[var(--primary)]">{activity.title}</h3>
+                            {activity.isOwner && (
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[var(--background)] text-[var(--primary)] border border-[var(--primary)]/20">
+                                Owner
+                              </span>
+                            )}
                           </div>
                         </div>
-                        <p className="text-gray-600 text-sm mb-2">{activity.description}</p>
+                        <p className="text-[var(--secondary)] text-sm mb-2 whitespace-pre-wrap">{activity.description}</p>
 
                         {/* Event Date/Time */}
                         {formatEventDateTime(activity) && (
                           <div className="mb-2">
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">📅 {formatEventDateTime(activity)}</span>
+                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[var(--secondary)]/10 text-[var(--secondary)]">
+                              📅 {formatEventDateTime(activity)}
+                            </span>
                           </div>
                         )}
 
                         {/* RSVP Section */}
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4 text-xs text-gray-500">
+                          <div className="flex items-center gap-4 text-xs text-[var(--secondary)]">
                             <span>By {activity.author}</span>
                             {(activity.rsvpYesCount! > 0 || activity.rsvpNoCount! > 0) && (
                               <button
@@ -468,7 +480,7 @@ export default function GroupDashboardPage() {
                                   e.stopPropagation();
                                   handleViewRsvps(activity);
                                 }}
-                                className="flex gap-2 hover:text-amber-600 cursor-pointer"
+                                className="flex gap-2 hover:text-[var(--primary)] cursor-pointer"
                                 title="View RSVP details"
                               >
                                 <span className="text-green-600">✓ {activity.rsvpYesCount}</span>
@@ -496,7 +508,7 @@ export default function GroupDashboardPage() {
                                     e.stopPropagation();
                                     handleRsvp(activity.id, "yes");
                                   }}
-                                  className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded hover:bg-green-500 hover:text-white"
+                                  className="px-2 py-1 text-xs bg-[var(--background)] text-[var(--secondary)] border border-[var(--primary)]/20 rounded hover:bg-green-500 hover:text-white hover:border-green-500"
                                 >
                                   ✓ Yes
                                 </button>
@@ -518,7 +530,7 @@ export default function GroupDashboardPage() {
                                     e.stopPropagation();
                                     handleRsvp(activity.id, "no");
                                   }}
-                                  className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded hover:bg-red-500 hover:text-white"
+                                  className="px-2 py-1 text-xs bg-[var(--background)] text-[var(--secondary)] border border-[var(--primary)]/20 rounded hover:bg-red-500 hover:text-white hover:border-red-500"
                                 >
                                   ✗ No
                                 </button>
@@ -530,7 +542,7 @@ export default function GroupDashboardPage() {
                     ))}
 
                     {activities.length === 0 && (
-                      <div className="text-center py-8 text-gray-500">
+                      <div className="text-center py-8 text-[var(--secondary)]">
                         <p>No activities yet. Create your first activity to get started!</p>
                       </div>
                     )}

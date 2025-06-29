@@ -45,7 +45,7 @@ export default function CreateGroupDialog({ isOpen, onClose, onCreateGroup }: Cr
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-amber-700 mb-1">
+          <label htmlFor="description" className="block text-sm font-medium text-[var(--primary)] mb-1">
             Description
           </label>
           <textarea
@@ -54,7 +54,7 @@ export default function CreateGroupDialog({ isOpen, onClose, onCreateGroup }: Cr
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter group description (optional)"
             rows={3}
-            className="w-full px-3 py-2 border border-amber-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent shadow-sm text-gray-900 placeholder-gray-500"
+            className="w-full px-3 py-2 border border-[var(--primary)]/20 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent shadow-sm text-[var(--foreground)] placeholder-[var(--secondary)] bg-[var(--background-secondary)]"
           />
         </div>
 

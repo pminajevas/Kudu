@@ -26,29 +26,13 @@ export default function RegisterForm({ onSubmit, onToggleMode }: RegisterFormPro
 
   return (
     <Card className="p-8">
-      <h2 className="text-xl font-semibold mb-6 text-amber-800 text-center">
-        Create Account
-      </h2>
-      
+      <h2 className="text-xl font-semibold mb-6 text-[var(--primary)] text-center">Create Account</h2>
+
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          label="Name"
-          type="text"
-          value={formData.name}
-          onChange={(value) => updateField("name", value)}
-          placeholder="Enter your name"
-          required
-        />
-        
-        <Input
-          label="Email"
-          type="email"
-          value={formData.email}
-          onChange={(value) => updateField("email", value)}
-          placeholder="Enter your email"
-          required
-        />
-        
+        <Input label="Name" type="text" value={formData.name} onChange={(value) => updateField("name", value)} placeholder="Enter your name" required />
+
+        <Input label="Email" type="email" value={formData.email} onChange={(value) => updateField("email", value)} placeholder="Enter your email" required />
+
         <Input
           label="Password"
           type="password"
@@ -65,12 +49,9 @@ export default function RegisterForm({ onSubmit, onToggleMode }: RegisterFormPro
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-sm text-amber-700">
+        <p className="text-sm text-[var(--secondary)]">
           Already have an account?{" "}
-          <button
-            onClick={onToggleMode}
-            className="text-amber-600 hover:text-amber-800 font-medium underline"
-          >
+          <button onClick={onToggleMode} className="text-[var(--primary)] hover:text-[var(--secondary)] font-medium underline">
             Sign in
           </button>
         </p>

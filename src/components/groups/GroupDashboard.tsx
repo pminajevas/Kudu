@@ -112,11 +112,11 @@ export default function GroupDashboard({ user }: GroupDashboardProps) {
 
       {/* My Groups Section */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">My Groups</h2>
+        <h2 className="text-2xl font-bold text-[var(--primary)] mb-6">My Groups</h2>
 
         {isLoadingGroups ? (
           <div className="text-center py-8">
-            <div className="text-gray-500">Loading your groups...</div>
+            <div className="text-[var(--secondary)]">Loading your groups...</div>
           </div>
         ) : groups.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -128,7 +128,7 @@ export default function GroupDashboard({ user }: GroupDashboardProps) {
           <div className="text-center py-12">
             {/* Illustrative SVG Icon */}
             <div className="mb-6 flex justify-center">
-              <svg className="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-24 h-24 text-[var(--secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -137,8 +137,8 @@ export default function GroupDashboard({ user }: GroupDashboardProps) {
                 />
               </svg>
             </div>
-            <div className="text-gray-900 text-lg font-medium mb-2">You haven't joined any groups yet</div>
-            <p className="text-gray-600">Create your first group or join an existing one to get started</p>
+            <div className="text-[var(--primary)] text-lg font-medium mb-2">You haven't joined any groups yet</div>
+            <p className="text-[var(--secondary)]">Create your first group or join an existing one to get started</p>
           </div>
         )}
       </div>
@@ -148,23 +148,23 @@ export default function GroupDashboard({ user }: GroupDashboardProps) {
         <div className="flex flex-col items-center text-center">
           {groups.length === 0 && (
             <div className="mb-8">
-              <h3 className="text-lg font-medium text-gray-800 mb-2">Get Started</h3>
-              <p className="text-gray-500 text-sm">Create your first group or join an existing one</p>
+              <h3 className="text-lg font-medium text-[var(--primary)] mb-2">Get Started</h3>
+              <p className="text-[var(--secondary)] text-sm">Create your first group or join an existing one</p>
             </div>
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 items-center">
-            {/* Modern Orange Create Group Button */}
+            {/* Modern Primary Color Create Group Button */}
             <button
               onClick={() => setShowCreateDialog(true)}
               disabled={isCreating}
-              className="group relative px-8 py-3 text-sm font-semibold text-white bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:transform-none overflow-hidden"
+              className="group relative px-8 py-3 text-sm font-semibold text-[var(--button-text)] bg-[var(--primary)] hover:bg-[var(--secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] focus:ring-offset-2 rounded-xl transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:transform-none overflow-hidden"
             >
               {/* Animated background overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-700 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"></div>
+              <div className="absolute inset-0 bg-[var(--secondary)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"></div>
 
               {/* Accent border */}
-              <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-orange-300/50 transition-colors duration-300"></div>
+              <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-[var(--secondary)]/30 transition-colors duration-300"></div>
 
               {/* Content with animation */}
               <span className="relative z-10 flex items-center space-x-2 transition-transform duration-200 group-hover:translate-x-0.5">
@@ -182,7 +182,7 @@ export default function GroupDashboard({ user }: GroupDashboardProps) {
             {groups.length === 0 && (
               <button
                 onClick={() => setShowJoinDialog(true)}
-                className="group relative px-8 py-3 text-sm font-semibold text-gray-700 bg-white border-2 border-gray-200 hover:border-orange-300 hover:text-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded-xl transition-all duration-300 hover:shadow-md"
+                className="group relative px-8 py-3 text-sm font-semibold text-[var(--primary)] bg-[var(--background-secondary)] border-2 border-[var(--primary)]/20 hover:border-[var(--primary)]/40 hover:text-[var(--secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] focus:ring-offset-2 rounded-xl transition-all duration-300 hover:shadow-md"
               >
                 <span className="flex items-center space-x-2">
                   <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">

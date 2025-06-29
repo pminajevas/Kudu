@@ -4,10 +4,17 @@
   --background: #FFF7F0;
   --foreground: #171717;
   --primary: #2C3E50;
+  --primary-rgb: 44, 62, 80;
   --secondary: #4B6C8C;
   --button-text: #fff;
   --background-secondary: #FFF;
   --font-family: 'Poppins';
+  --muted: #6B7280;
+  --border: #E5E7EB;
+  --accent: #4B6C8C;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
 }
 
 head {
@@ -15,7 +22,7 @@ head {
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, var(--background) 0%, #FFF9F5 25%, #FFFDF8 50%, #FEFEFE 75%, #FFFFFF 100%);
   color: var(--foreground);
   font-family: var(--font-family)
 }
@@ -245,4 +252,67 @@ html {
 
 .cursor-magic:hover::before {
   transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* Additional utility classes for consistent theming */
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.bg-surface {
+  background-color: var(--background-secondary);
+}
+
+.border-primary {
+  border-color: var(--primary);
+}
+
+.border-secondary {
+  border-color: var(--secondary);
+}
+
+.border-muted {
+  border-color: var(--border);
+}
+
+/* Focus ring utilities */
+.focus-ring-primary {
+  --tw-ring-color: var(--primary);
+}
+
+.focus-ring-secondary {
+  --tw-ring-color: var(--secondary);
+}
+
+/* Hover state utilities */
+.hover-primary:hover {
+  color: var(--primary);
+}
+
+.hover-secondary:hover {
+  color: var(--secondary);
+}
+
+.hover-bg-primary:hover {
+  background-color: var(--primary);
+}
+
+.hover-bg-secondary:hover {
+  background-color: var(--secondary);
 }

@@ -36,14 +36,14 @@ export default function Alert({ children, variant = "info", className = "", onDi
 
   if (!isVisible) return null;
   const variantClasses = {
-    info: "bg-gray-50 border-gray-200 text-gray-700 shadow-sm",
+    info: "bg-[var(--background)] border-[var(--primary)]/20 text-[var(--secondary)] shadow-sm",
     success: "bg-green-50 border-green-200 text-green-700 shadow-sm",
     warning: "bg-orange-50 border-orange-200 text-orange-700 shadow-sm",
     error: "bg-red-50 border-red-200 text-red-700 shadow-sm",
   };
 
   const iconClasses = {
-    info: "text-gray-400",
+    info: "text-[var(--secondary)]",
     success: "text-green-400",
     warning: "text-orange-400",
     error: "text-red-400",
@@ -99,7 +99,7 @@ export default function Alert({ children, variant = "info", className = "", onDi
           <div className="flex-shrink-0 mt-0.5">{getIcon()}</div>
           <div className="text-sm font-medium leading-relaxed">{children}</div>
         </div>
-        <button onClick={handleDismiss} className="flex-shrink-0 ml-4 text-gray-400 hover:text-gray-600 transition-colors duration-200" aria-label="Dismiss">
+        <button onClick={handleDismiss} className="flex-shrink-0 ml-4 text-[var(--secondary)] hover:text-[var(--primary)] transition-colors duration-200" aria-label="Dismiss">
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"

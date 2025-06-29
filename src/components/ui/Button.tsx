@@ -12,10 +12,10 @@ export default function Button({ children, onClick, type = "button", variant = "
   const baseClasses = "rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors";
 
   const variantClasses = {
-    primary: "bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-400",
-    secondary: "bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-400",
+    primary: "bg-[var(--primary)] text-[var(--button-text)] hover:bg-[var(--secondary)] focus:ring-[var(--secondary)]",
+    secondary: "bg-[var(--secondary)] text-[var(--button-text)] hover:bg-[var(--primary)] focus:ring-[var(--primary)]",
     danger: "bg-red-500 text-white hover:bg-red-600 focus:ring-red-500",
-    white: "bg-white text-black border border-gray-300 hover:bg-gray-50 focus:ring-gray-500",
+    white: "bg-[var(--background-secondary)] text-[var(--primary)] border border-[var(--primary)]/20 hover:bg-[var(--background)] focus:ring-[var(--secondary)]",
   };
 
   const sizeClasses = {

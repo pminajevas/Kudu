@@ -32,9 +32,9 @@ export default function LoginForm({ onSubmit, onToggleMode }: LoginFormProps) {
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-sm text-amber-700">
+        <p className="text-sm text-[var(--secondary)]">
           Don't have an account?{" "}
-          <button onClick={onToggleMode} className="text-amber-600 hover:text-amber-800 font-medium underline">
+          <button onClick={onToggleMode} className="text-[var(--primary)] hover:text-[var(--secondary)] font-medium underline">
             Create one
           </button>
         </p>

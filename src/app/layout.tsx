@@ -9,12 +9,12 @@ import SocialSidebar from "@/components/SocialSidebar";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "600","700"], // Add other weights if needed
+  weight: ["400", "600", "700"], // Add other weights if needed
   variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
-  title: "Kudu"
+  title: "Kudu",
 };
 
 export default function RootLayout({
@@ -24,9 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <NavBar />
       <body className={`${poppins.variable} scroll-smooth antialiased`}>
         <Providers>
+          <NavBar />
           {children}
           <ScrollToTop />
           <SocialSidebar />

@@ -93,20 +93,20 @@ export default function GroupCard({ group, userRole, onLeaveGroup }: GroupCardPr
   };
 
   return (
-    <div className="group bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-2xl hover:border-orange-200 transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-[1.02] relative overflow-hidden h-full flex flex-col">
+    <div className="group bg-[var(--background-secondary)] rounded-xl shadow-lg border border-[var(--primary)]/10 p-8 hover:shadow-2xl hover:border-[var(--primary)]/30 transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-[1.02] relative overflow-hidden h-full flex flex-col">
       {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[var(--background)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-      {/* Orange accent border on hover */}
-      <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-orange-300/30 transition-colors duration-300"></div>
+      {/* Accent border on hover */}
+      <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-[var(--primary)]/20 transition-colors duration-300"></div>
 
       <div className="relative z-10 flex flex-col h-full">
         {/* Header with title and role */}
         <div className="flex justify-between items-start mb-6">
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-200">{group.name}</h3>
+            <h3 className="text-xl font-bold text-[var(--primary)] mb-2 group-hover:text-[var(--secondary)] transition-colors duration-200">{group.name}</h3>
             {isOwner && (
-              <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-orange-100 to-orange-50 text-orange-700 border border-orange-200 shadow-sm">
+              <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-[var(--background)] to-[var(--background-secondary)] text-[var(--primary)] border border-[var(--primary)]/20 shadow-sm">
                 <svg className="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
@@ -124,18 +124,18 @@ export default function GroupCard({ group, userRole, onLeaveGroup }: GroupCardPr
         <div className="flex-grow">
           {group.description && (
             <div className="mb-6">
-              <p className="text-gray-600 text-base leading-relaxed line-clamp-3">{group.description}</p>
+              <p className="text-[var(--secondary)] text-base leading-relaxed line-clamp-3 whitespace-pre-wrap">{group.description}</p>
             </div>
           )}
         </div>
 
         {/* Stats - always above buttons */}
-        <div className="flex items-center mb-6 py-4 px-4 bg-gray-50 rounded-lg group-hover:bg-orange-50/50 transition-colors duration-200">
+        <div className="flex items-center mb-6 py-4 px-4 bg-[var(--background)] rounded-lg group-hover:bg-[var(--background)]/70 transition-colors duration-200">
           <div className="flex items-center space-x-3">
-            <svg className="w-6 h-6 text-gray-400 group-hover:text-orange-400 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-6 h-6 text-[var(--secondary)] group-hover:text-[var(--primary)] transition-colors" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
             </svg>
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium text-[var(--primary)]">
               {group.group_members?.length || 1} member{(group.group_members?.length || 1) !== 1 ? "s" : ""}
             </span>
           </div>
@@ -145,7 +145,7 @@ export default function GroupCard({ group, userRole, onLeaveGroup }: GroupCardPr
         <div className="flex gap-3 mt-auto">
           <button
             onClick={handleViewGroup}
-            className="flex-1 group/btn bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white text-sm font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+            className="flex-1 group/btn bg-[var(--primary)] hover:bg-[var(--secondary)] text-[var(--button-text)] text-sm font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] focus:ring-offset-2"
           >
             <span className="flex items-center justify-center space-x-2">
               <svg className="w-5 h-5 transition-transform group-hover/btn:rotate-12" fill="currentColor" viewBox="0 0 20 20">
@@ -162,7 +162,7 @@ export default function GroupCard({ group, userRole, onLeaveGroup }: GroupCardPr
 
           <button
             onClick={handleCopyInviteLink}
-            className="group/invite bg-white border-2 border-gray-200 hover:border-orange-300 text-gray-700 hover:text-orange-600 text-sm font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+            className="group/invite bg-[var(--background-secondary)] border-2 border-[var(--primary)]/20 hover:border-[var(--primary)]/40 text-[var(--primary)] hover:text-[var(--secondary)] text-sm font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--secondary)] focus:ring-offset-2"
             title="Copy invite link"
           >
             <span className="flex items-center justify-center space-x-2">
@@ -192,7 +192,7 @@ export default function GroupCard({ group, userRole, onLeaveGroup }: GroupCardPr
             <button
               onClick={handleLeaveGroup}
               disabled={isLeaving}
-              className="bg-gray-100 hover:bg-red-50 text-gray-600 hover:text-red-600 text-sm font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              className="bg-[var(--background)] hover:bg-red-50 text-[var(--secondary)] hover:text-red-600 text-sm font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
               title="Leave group"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

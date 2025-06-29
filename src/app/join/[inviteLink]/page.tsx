@@ -204,7 +204,7 @@ export default function JoinGroupPage() {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Join Group</h1>
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
             <h2 className="text-lg font-semibold text-amber-900">{group.name}</h2>
-            {group.description && <p className="text-amber-700 text-sm mt-1">{group.description}</p>}
+            {group.description && <p className="text-amber-700 text-sm mt-1 whitespace-pre-wrap">{group.description}</p>}
             <p className="text-amber-600 text-xs mt-2">Created {new Date(group.created_at).toLocaleDateString()}</p>
           </div>
         </div>

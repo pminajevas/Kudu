@@ -11,12 +11,12 @@ interface InputProps {
 export default function Input({ label, type, value, onChange, placeholder, required = false, minLength }: InputProps) {
   return (
     <div>
-      <label className="block text-sm font-medium text-amber-700 mb-1">{label}</label>
+      <label className="block text-sm font-medium text-[var(--primary)] mb-1">{label}</label>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border-amber-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 p-3 border text-gray-900 placeholder-gray-500 bg-white"
+        className="w-full rounded-md border-[var(--primary)]/20 shadow-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] p-3 border text-[var(--foreground)] placeholder-[var(--secondary)] bg-[var(--background-secondary)]"
         placeholder={placeholder}
         required={required}
         minLength={minLength}
