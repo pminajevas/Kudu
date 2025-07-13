@@ -11,8 +11,16 @@ export default function CallToAction() {
             <TypingAnimation text="Be the Friend Who Makes Things Happen!" speed={80} />
           </h1>
 
-          <div className="animate-fadeInLeft" style={{ animationDelay: "0.4s" }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fadeInLeft" style={{ animationDelay: "0.4s" }}>
             <Button text="Join Now" />
+            <a
+              href="/marketplace"
+              className="rounded-[30px] w-[300px] h-[100px] bg-white/20 backdrop-blur-sm border-2 border-[var(--secondary)] hover:bg-[var(--secondary)] hover:border-[var(--primary)] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[var(--secondary)] focus:ring-opacity-50 relative overflow-hidden group cursor-pointer flex items-center justify-center"
+            >
+              <span className="text-[var(--secondary)] group-hover:text-white text-[24px] sm:text-[28px] font-semibold relative z-10 group-hover:scale-105 transition-all duration-300">
+                Browse Presidents
+              </span>
+            </a>
           </div>
         </div>
 

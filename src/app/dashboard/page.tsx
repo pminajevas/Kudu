@@ -87,6 +87,13 @@ export default function Dashboard() {
         setAuthToken(result.token);
         localStorage.setItem("auth_token", result.token);
         localStorage.setItem("auth_user", JSON.stringify(result.user));
+
+        // Check for redirect URL and navigate if present
+        const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
+        if (redirectUrl) {
+          sessionStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirectUrl;
+        }
       } else {
         setMessage(`Registration failed: ${result.error}`);
       }
@@ -110,6 +117,13 @@ export default function Dashboard() {
         setAuthToken(result.token);
         localStorage.setItem("auth_token", result.token);
         localStorage.setItem("auth_user", JSON.stringify(result.user));
+
+        // Check for redirect URL and navigate if present
+        const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
+        if (redirectUrl) {
+          sessionStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirectUrl;
+        }
       } else {
         setMessage(`Login failed: ${result.error}`);
       }
